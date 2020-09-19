@@ -41,7 +41,7 @@ CREATE TABLE public.employee (
     create_date timestamp without time zone,
     last_position character varying(255),
     name character varying(255),
-    nik bigint,
+    nik character varying(255),
     type character varying(255),
     divisions_id bigint,
     positions_id bigint
@@ -123,10 +123,8 @@ COPY public.division (division_id, name) FROM stdin;
 --
 
 COPY public.employee (id, create_date, last_position, name, nik, type, divisions_id, positions_id) FROM stdin;
-15	2020-09-18 15:47:04.887		rino	1	NEW EMPLOYEE	1	1
-16	2020-09-18 15:51:07.921		rino	1	NEW EMPLOYEE	1	1
-12	2020-09-18 15:33:23.189		rino	1	PROMOTE	1	2
-13	2020-09-18 15:33:23.189	Asisten Manager	rino	1	DEMOTE	1	2
+3	2020-09-19 13:16:55.178	Manager	rino	MK00003	DEMOTE	1	2
+9	2020-09-19 13:46:34.374	NEW	rino dwip	MK00008	NEW	1	2
 \.
 
 
@@ -153,7 +151,7 @@ SELECT pg_catalog.setval('public.seq_divisions', 1, true);
 -- Name: seq_employees; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.seq_employees', 16, true);
+SELECT pg_catalog.setval('public.seq_employees', 9, true);
 
 
 --

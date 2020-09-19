@@ -26,12 +26,13 @@ public class EmployeesService {
 	 //create
 	 	public EmployeesDto saveEmployee(EmployeesDto body){
 	 		Employees employeesEntity = new Employees();
-	 		body.setNik(generateNik(body.getId()));
-			body.setType("NEW EMPLOYEE");
+	 		body.setNik(generateNik(repository.getEmployeeCurrentSequence()));
+			body.setType("NEW");
 			body.setCreateDate(new Date());
-			body.setLastPosition("-");
+			body.setLastPosition("NEW");
 			employeesEntity =  modelMapper.map(body, Employees.class);
 			repository.save(employeesEntity);
+			body.setId(repository.getEmployeeNextSequence());
 			
 		return body;
 	 }
@@ -54,6 +55,7 @@ public class EmployeesService {
 		}else if (dtoPositionId > entityPositionId) {
 			body.setType("PROMOTE");
 		}
+	    body.setId(paramId);
 	    body.setNik(employeesEntity.getNik());
 	    body.setCreateDate(employeesEntity.getCreateDate());
 	    body.setLastPosition(employeesEntity.getPositions().getName());
@@ -92,8 +94,9 @@ public class EmployeesService {
 		 }
 	}
 	 //delete
-	public void deleteEmployee(Long paramId) {
+	public String deleteEmployee(Long paramId) {
 		repository.deleteById(paramId);
+		return "Data Employee with ID "+ paramId +" Deleted.";
 	}
 	 
 	public String generateNik(long id) {

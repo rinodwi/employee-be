@@ -68,13 +68,12 @@ public class EmployeesController {
     //Delete
     @DeleteMapping("/employees/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable(value = "id") Long paramId ){
-    	 employeesService.deleteEmployee(paramId);
-         return new ResponseEntity<>("",HttpStatus.OK); 
+         return new ResponseEntity<>(employeesService.deleteEmployee(paramId),HttpStatus.OK); 
     }
     
     //Sequence
     @GetMapping("/employee-sequence")
-    public String getEmployeeCurrentSequence() {
+    public long getEmployeeCurrentSequence() {
     return	employeesRepository.getEmployeeCurrentSequence();
     }
 
