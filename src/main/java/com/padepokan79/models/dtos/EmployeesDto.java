@@ -1,6 +1,6 @@
 package com.padepokan79.models.dtos;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeesDto {
-	
-	private Timestamp createDate;
-	private DivisionsDto divisions;
+
 	private long id;
-	private String lastPosition;
+	private String nik;
 	private String name;
-	private long nik;
-	private PositionsDto positions;
+	private long divisionsId;
+	private long positionsId;
+	private String lastPosition;
 	private String type;
+	private Date createDate;
 
 }
