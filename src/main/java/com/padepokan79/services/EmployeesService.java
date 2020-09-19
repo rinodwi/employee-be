@@ -105,13 +105,14 @@ public class EmployeesService {
 	}
 	 
 	public String generateNik(long id) {
+		long ids = id + 1; 
 		String nik = "";
-		if (id<10) {
-			nik="MK0000"+id;
-		}else if (id<100) {
-			nik="MK000"+id;
-		}else if (id<1000) {
-			nik="MK00"+id;
+		if (ids<10) {
+			nik="MK0000"+ids;
+		}else if (ids<100) {
+			nik="MK000"+ids;
+		}else if (ids<1000) {
+			nik="MK00"+ids;
 		}
 	return nik;
 	}
