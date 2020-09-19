@@ -14,13 +14,17 @@ import org.springframework.stereotype.Service;
 
 import com.padepokan79.exceptions.ResourceNotFoundException;
 import com.padepokan79.models.Employees;
+import com.padepokan79.models.Positions;
 import com.padepokan79.models.dtos.EmployeesDto;
 import com.padepokan79.repositories.EmployeesRepository;
+import com.padepokan79.repositories.PositionsRepository;
 
 @Service
 public class EmployeesService {
 	 @Autowired
 	 	EmployeesRepository repository;
+	 @Autowired
+	 	PositionsRepository positionsRepository;
 	 
 	 	ModelMapper modelMapper = new ModelMapper();
 	 //create
@@ -41,18 +45,19 @@ public class EmployeesService {
 	 //edit
 	 public EmployeesDto editEmployee(Long paramId, EmployeesDto body){
 	    Employees employeesEntity = repository.findById(paramId).orElseThrow(() -> new ResourceNotFoundException("Employees", "IdEmployees",paramId));
+	    Positions positionsEntity = positionsRepository.findById(body.getPositionsId()).get();
 	    
-	    long entityPositionId = employeesEntity.getPositions().getId();
-	    long dtoPositionId = body.getPositionsId();
+	    long previousPositionLevel = employeesEntity.getPositions().getLevel();
+	    long nextPositionLevel = positionsEntity.getLevel();
 
 //	    System.out.println("Entity====>"+entityPositionId);
 //	    System.out.println("DTO====>"+dtoPositionId);
 	    
-	    if (dtoPositionId == entityPositionId) {
+	    if (nextPositionLevel == previousPositionLevel) {
 		    body.setType(employeesEntity.getType());
-		}else if (dtoPositionId < entityPositionId) {
+		}else if (nextPositionLevel < previousPositionLevel) {
 			body.setType("DEMOTE");
-		}else if (dtoPositionId > entityPositionId) {
+		}else if (nextPositionLevel > previousPositionLevel) {
 			body.setType("PROMOTE");
 		}
 	    body.setId(paramId);
